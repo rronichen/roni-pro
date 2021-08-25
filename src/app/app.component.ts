@@ -12,18 +12,23 @@ export class AppComponent  implements OnInit{
   title = 'roni-proj';
 
   products: Array<Product> = [
-    {ID:0, Name: "Ham", Description: "dsdfsdfsdf", Price: 50},
-    {ID:1, Name: "Salat", Description: "dsdfsdfsdf", Price: 50},
-    {ID:2, Name: "Pasta", Description: "dsdfsdfsdf", Price: 50},
-    {ID:3, Name: "Rice", Description: "dsdfsdfsdf", Price: 50}
+    {ID:1, Name: "Ham", Description: "dsdfsdfsdf", Price: 50},
+    {ID:2, Name: "Salat", Description: "dsdfsdfsdf", Price: 50},
+    {ID:3, Name: "Pasta", Description: "dsdfsdfsdf", Price: 50},
+    {ID:4, Name: "Rice", Description: "dsdfsdfsdf", Price: 50}
 
   ]
 
   productForm: FormGroup;
-  cardSelected: number = 1;
+  cardSelected: number;
+  newProduct :Product;
+  formProduct: Product;
 
   
   ngOnInit() {
+    this.newProduct = new Product();
+    this.formProduct = this.newProduct
+    this.newProduct.ID = 0;
     this.productForm = new FormGroup({
       'name' : new FormControl('', [Validators.required]),
       'description' : new FormControl('',  [Validators.required]),
@@ -34,18 +39,20 @@ export class AppComponent  implements OnInit{
 
   onSaveProduct(){
     // chek validitions
-    let newProduct = new Product();
-    newProduct.Name = this.productForm.get('name').value;
-    newProduct.Description = this.productForm.get('description').value;
-    newProduct.Description = this.productForm.get('description').value;
-    newProduct.ID = 100 * Math.random();
-    this.products.push(newProduct);
+    this.newProduct = new Product();
+    this.newProduct.Name = this.productForm.get('name').value;
+    this.newProduct.Description = this.productForm.get('description').value;
+    this.newProduct.Description = this.productForm.get('description').value;
+    this.newProduct.ID = Math.round( 100 * Math.random());
+    this.products.push(this.newProduct);
     this.productForm.reset();
-    
+    this.cardSelected = this.newProduct.ID;
+
   }
 
   onAdd(){
     this.productForm.reset();
+    this.newProduct = new Product();
   }
 
   deleteProduct(id){
@@ -55,7 +62,7 @@ export class AppComponent  implements OnInit{
   }
 
   onCardSelcted(id){
-    debugger;
     this.cardSelected=id;
+    this.formProduct = this.products.filter(p=> p.ID == id)[0];
   }
 }

@@ -4,7 +4,7 @@
 <button class="btn btn-primary" (click)="onAdd()">Add</button>
 
 <div class="row">
-  <div class="col " *ngFor="let product of products" >
+  <div class="col " *ngFor="let product of products"  [class]="cardSelected == product.ID ? 'proCard': null " >
     <app-card [product]="product" (deleteProduct)="deleteProduct(ID)" (click)="onCardSelcted(product.ID)"></app-card>
   </div>
 </div>
@@ -15,21 +15,21 @@
   <div class="row">
     <div class="col">
       Name : <input formControlName="name"
-                    [(ngModel)]="products[cardSelected].Name"
+                    [(ngModel)]="formProduct.Name"
                     type="text"/>
     </div>
   </div>
   <div class="row">
     <div class="col">
       Description : <input formControlName="description"
-                          [(ngModel)]="products[cardSelected].Description"
+                          [(ngModel)]="formProduct.Description"
                           type="text"/>/>
     </div>
   </div>
   <div class="row">
     <div class="col">
       Price : <input  formControlName="price"
-                      [(ngModel)]="products[cardSelected].Price"
+                      [(ngModel)]="formProduct.Price"
                       type="number"/>
     </div>
   </div>
